@@ -538,16 +538,6 @@ export default function Matches() {
                   >
                     View profile
                   </Link>
-                  {r.cro_user_id && (
-                    <Link
-                      className="rounded-xl bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-700"
-                      href={`/chat/${encodeURIComponent(data!.project_id)}/${encodeURIComponent(
-                        r.cro_user_id
-                      )}`}
-                    >
-                      Start chat
-                    </Link>
-                  )}
                   {r.contact_email && (
                     <a
                       className="rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-slate-50"
