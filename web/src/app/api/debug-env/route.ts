@@ -6,7 +6,7 @@ export async function GET() {
   return NextResponse.json({
     NEXT_PUBLIC_SUPABASE_URL: have("NEXT_PUBLIC_SUPABASE_URL"),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: have("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
-    SUPABASE_SERVICE_ROLE_KEY: have("SUPABASE_SERVICE_ROLE"),
+    SUPABASE_SERVICE_ROLE_KEY: have("SUPABASE_SERVICE_ROLE_KEY"),
     HF_TOKEN: have("HF_TOKEN"),
     HF_MODEL: process.env.HF_MODEL ?? "(unset)",
     EMBED_DIM: process.env.EMBED_DIM ?? "(unset)",
