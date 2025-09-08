@@ -61,7 +61,8 @@ export async function POST(
     if (error) throw error;
 
     return NextResponse.json({ ok: true, owner: user.id });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message ?? "server error" }, { status: 500 });
-  }
+  } catch (err: unknown) {
+  const msg = err instanceof Error ? err.message : "Unknown error";
+  return NextResponse.json({ error: msg }, { status: 500 });
+}
 }

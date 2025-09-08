@@ -370,6 +370,21 @@ import { supabaseAdmin } from "@/lib/supabaseAdmin";
 // Optional: if you added this earlier
 import SignOutButton from "@/app/_components/SignOutButton";
 
+type ProjectRow = {
+  id: string;
+  title: string;
+  created_at: string; // ISO string from Supabase
+};
+
+type ReplyRow = {
+  id: string;
+  sender: string;        // user_profiles.id (uuid)
+  project_id: string;    // projects.id (uuid)
+  message: string;
+  sent_at: string;       // ISO string
+};
+
+
 export const dynamic = "force-dynamic";
 
 // Read-only cookies adapter for Server Components (prevents Next 15 cookie write error)
@@ -628,36 +643,36 @@ export default async function SponsorMe() {
             </div>
           ) : (
             <ul className="mt-3 space-y-2">
-              {projects.map((p: any) => (
-                <li
-                  key={p.id}
-                  className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-3 text-sm shadow-sm"
+          {(projects as ProjectRow[]).map((p) => (
+            <li
+              key={p.id}
+              className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-3 text-sm shadow-sm"
+            >
+              <div>
+                <div className="font-medium text-slate-900">{p.title}</div>
+                <div className="text-xs text-slate-500">
+                  {new Date(p.created_at).toLocaleString()}
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Link
+                  className="rounded-lg border border-slate-300 bg-white px-3 py-1 text-xs font-medium text-slate-900 hover:bg-slate-50"
+                  href={`/matches?projectId=${p.id}`}
                 >
-                  <div>
-                    <div className="font-medium text-slate-900">{p.title}</div>
-                    <div className="text-xs text-slate-500">
-                      {new Date(p.created_at).toLocaleString()}
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Link
-                      className="rounded-lg border border-slate-300 bg-white px-3 py-1 text-xs font-medium text-slate-900 hover:bg-slate-50"
-                      href={`/matches?projectId=${p.id}`}
-                    >
-                      See matches
-                    </Link>
-                    {/* If you want to open the latest thread for this project specifically,
-                        you could point to an inbox filtered by project, or keep a generic link */}
-                    <Link
-                      className="rounded-lg border border-slate-300 bg-white px-3 py-1 text-xs font-medium text-slate-900 hover:bg-slate-50"
-                      href="/messages"
-                    >
-                      Open threads
-                    </Link>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                  See matches
+                </Link>
+                {/* Keep/grow this as you like */}
+                <Link
+                  className="rounded-lg border border-slate-300 bg-white px-3 py-1 text-xs font-medium text-slate-900 hover:bg-slate-50"
+                  href="/messages"
+                >
+                  Open threads
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ul>
+
           )}
         </section>
 
@@ -674,32 +689,33 @@ export default async function SponsorMe() {
             </div>
           ) : (
             <ul className="mt-3 space-y-2">
-              {replies.map((m: any) => {
-                const s = senders.get(m.sender);
-                const cro = croByOwner.get(m.sender);
-                const title = projTitle.get(m.project_id) ?? "Untitled project";
-                return (
-                  <li key={m.id} className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
-                    <div className="text-sm text-slate-800">
-                      <span className="font-medium">{cro?.name ?? s?.full_name ?? "CRO"}</span>{" "}
-                      replied on <span className="italic">{title}</span>
-                    </div>
-                    <div className="mt-1 text-sm text-slate-700">{m.message}</div>
-                    <div className="mt-2 flex items-center justify-between text-xs text-slate-500">
-                      <time dateTime={new Date(m.sent_at).toISOString()}>
-                        {new Date(m.sent_at).toLocaleString()}
-                      </time>
-                      <Link
-                        href={`/chat/${m.project_id}/${m.sender}`}
-                        className="font-medium text-indigo-700 underline decoration-indigo-300 underline-offset-4 hover:text-indigo-900"
-                      >
-                        Open chat
-                      </Link>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+          {(replies as ReplyRow[]).map((m) => {
+            const s    = senders.get(m.sender);
+            const cro  = croByOwner.get(m.sender);
+            const title = projTitle.get(m.project_id) ?? "Untitled project";
+            return (
+              <li key={m.id} className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+                <div className="text-sm text-slate-800">
+                  <span className="font-medium">{cro?.name ?? s?.full_name ?? "CRO"}</span>{" "}
+                  replied on <span className="italic">{title}</span>
+                </div>
+                <div className="mt-1 text-sm text-slate-700">{m.message}</div>
+                <div className="mt-2 flex items-center justify-between text-xs text-slate-500">
+                  <time dateTime={new Date(m.sent_at).toISOString()}>
+                    {new Date(m.sent_at).toLocaleString()}
+                  </time>
+                  <Link
+                    href={`/chat/${m.project_id}/${m.sender}`}
+                    className="font-medium text-indigo-700 underline decoration-indigo-300 underline-offset-4 hover:text-indigo-900"
+                  >
+                    Open chat
+                  </Link>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+
           )}
         </section>
 

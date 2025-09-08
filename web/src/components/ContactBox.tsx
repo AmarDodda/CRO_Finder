@@ -103,9 +103,10 @@ export default function ContactBox({
       setStatus({ type: "ok", msg: "Sent! The CRO has been notified." });
       setMsg("");
       formRef.current?.reset();
-    } catch (err: any) {
-      setStatus({ type: "err", msg: err.message || "Something went wrong" });
-    }
+    } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : "Something went wrong";
+    setStatus({ type: "err", msg });
+}
   }
 
   return (

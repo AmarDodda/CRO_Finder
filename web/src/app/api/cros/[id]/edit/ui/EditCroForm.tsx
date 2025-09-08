@@ -54,8 +54,9 @@ export default function EditCroForm({ cro }: { cro: CroRow }) {
       setMsg("Saved ✔");
       router.refresh(); // revalidate server data
       // Optional: router.push(`/cros/me`);
-    } catch (err: any) {
-      setMsg(err.message || "Something went wrong");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Something went wrong";
+      setMsg(message);
     } finally {
       setBusy(false);
     }

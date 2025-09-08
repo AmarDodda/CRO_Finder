@@ -271,7 +271,7 @@ const MatchRowSchema = z.object({
   similarity: z.number(),
 });
 
-type MatchRow = z.infer<typeof MatchRowSchema>;
+// type MatchRow = z.infer<typeof MatchRowSchema>;
 
 const DegradedRowSchema = MatchRowSchema.extend({
   score: z.number().optional(), // RPC may return either score or similarity
@@ -418,7 +418,7 @@ export async function POST(req: Request) {
       try {
         qvec = await embedText(textForEmbedding);
         await supabaseAdmin.from("projects").update({ embedding: qvec }).eq("id", pid!);
-      } catch (_err: unknown) {
+      } catch {
         embeddingsOk = false;
       }
     }

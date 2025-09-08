@@ -50,20 +50,26 @@ export async function embedText(text: string): Promise<number[]> {
   for (let i = 0; i < maxRetries; i++) {
     try {
       return await hfEmbedOnce(safe);
-    } catch (err: any) {
-      const msg = String(err?.message || err);
-      const retriable =
-        msg.includes("504") ||
-        msg.includes("timed out") ||
-        msg.includes("aborted") ||
-        msg.includes("429") ||
-        msg.includes("Bad Gateway") ||
-        msg.includes("ECONNRESET");
+    } catch (err: unknown) {
+  const msg =
+    err instanceof Error
+      ? err.message
+      : typeof err === "string"
+      ? err
+      : JSON.stringify(err);
 
-      if (!retriable || i === maxRetries - 1) {
-        // Final failure: bubble up a typed error your route can handle
-        throw new Error(`EmbeddingsUnavailable: ${msg}`);
-      }
+  const retriable =
+    msg.includes("504") ||
+    msg.includes("timed out") ||
+    msg.includes("aborted") ||
+    msg.includes("429") ||
+    msg.includes("Bad Gateway") ||
+    msg.includes("ECONNRESET");
+
+  if (!retriable || i === maxRetries - 1) {
+    // Final failure: bubble up a typed error your route can handle
+    throw new Error(`EmbeddingsUnavailable: ${msg}`);
+  }
       await new Promise((r) => setTimeout(r, delay));
       delay *= 2;
     }

@@ -124,9 +124,12 @@ export default function NewProject() {
       }
 
       router.push(`/matches?projectId=${j.project_id}`);
-    } catch (e: any) {
-      setErr(e.message || "Something went wrong");
-    } finally {
+      } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : "Something went wrong";
+    setErr(msg);
+  }
+
+    finally {
       setLoading(false);
     }
   }

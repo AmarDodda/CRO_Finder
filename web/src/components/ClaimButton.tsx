@@ -18,9 +18,12 @@ export default function ClaimButton({ croId }: { croId: string }) {
         throw new Error(j.error || r.statusText);
       }
       router.refresh(); // re-fetches the server page so owner appears
-    } catch (e: any) {
-      setErr(e.message ?? "Claim failed");
-    } finally {
+    }
+    catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Something went wrong";
+      setErr(msg);
+  } 
+    finally {
       setBusy(false);
     }
   }

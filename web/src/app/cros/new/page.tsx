@@ -64,6 +64,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 /** Minimal country list (add more as needed) */
 const COUNTRIES = [
@@ -147,9 +148,10 @@ export default function NewCRO() {
 
       // ✅ redirect to CRO dashboard (keep your existing target; change to /cros/me if you prefer)
       router.replace(`/cros/${j.id}/dashboard`);
-    } catch (e: any) {
-      setErr(e.message || "Something went wrong");
-    } finally {
+      } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Something went wrong";
+      setErr(msg);
+    }finally {
       setBusy(false);
     }
   }
@@ -165,12 +167,12 @@ export default function NewCRO() {
               <h1 className="mt-1 text-2xl font-semibold md:text-3xl">Create your CRO profile</h1>
               <p className="mt-1 text-sm text-white/90">Showcase capabilities and start receiving qualified sponsor inquiries.</p>
             </div>
-            <a
+            <Link
               href="/cros/me"
               className="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur hover:bg-white/20"
             >
               Skip for now
-            </a>
+            </Link>
           </div>
         </div>
         {/* decorative molecules */}
@@ -311,12 +313,12 @@ export default function NewCRO() {
                   {busy ? "Saving…" : "Save"}
                 </button>
 
-                <a
+                <Link
                   href="/cros/me"
                   className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-900 hover:bg-slate-50"
                 >
                   Cancel
-                </a>
+                </Link>
 
                 <div className="text-xs text-slate-500">SOC 2-ready • HIPAA/GDPR aware</div>
               </div>

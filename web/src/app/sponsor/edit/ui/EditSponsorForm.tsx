@@ -12,6 +12,7 @@ export default function EditSponsorForm({ profile }: { profile: SponsorProfile }
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
@@ -27,9 +28,12 @@ export default function EditSponsorForm({ profile }: { profile: SponsorProfile }
       setMsg("Saved ✔");
       router.replace("/sponsor/me");
       router.refresh();
-    } catch (err: any) {
-      setMsg(err.message || "Something went wrong");
-    } finally {
+    } catch (e: unknown) {
+   const msg = e instanceof Error ? e.message : "Something went wrong";
+   setMsg(msg);
+}
+
+    finally {
       setBusy(false);
     }
   }
@@ -88,3 +92,5 @@ export default function EditSponsorForm({ profile }: { profile: SponsorProfile }
     </form>
   );
 }
+
+
