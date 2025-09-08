@@ -548,9 +548,9 @@ export default async function CroMe() {
           </div>
 
           {/* Quick actions */}
-          <div className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur">
-            <h2 className="text-sm font-semibold tracking-wide text-slate-900">Quick actions</h2>
-            <div className="mt-3 grid gap-2">
+          <div className="rounded-xl border border-slate-200 bg-white/80 p-4 shadow-sm backdrop-blur w-full max-w-sm md:justify-self-end">
+            <h2 className="text-sm font-semibold tracking-wide text-slate-900">Quick Actions</h2>
+            <div className="mt-4 space-y-3">
               <Action
                 href={`/cros/${cro.id}/edit`}
                 label="Update capabilities"
