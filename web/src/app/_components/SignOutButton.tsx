@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SignOutButton({
-  redirectTo = "/auth?role=cro&mode=login",
+  redirectTo = "/",
   className = "",
 }: {
   redirectTo?: string;
