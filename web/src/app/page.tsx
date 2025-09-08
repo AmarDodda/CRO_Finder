@@ -239,21 +239,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Logos / Social proof (placeholder) */}
-      <section className="mx-auto w-full max-w-6xl px-6 pb-12">
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-500 shadow-sm">
-          <p className="text-center text-xs uppercase tracking-wider">Trusted by teams across biotech & pharma</p>
-          <div className="mt-4 grid grid-cols-2 gap-6 opacity-80 sm:grid-cols-3 md:grid-cols-6">
-            <div className="h-10 rounded bg-slate-100" aria-hidden />
-            <div className="h-10 rounded bg-slate-100" aria-hidden />
-            <div className="h-10 rounded bg-slate-100" aria-hidden />
-            <div className="h-10 rounded bg-slate-100" aria-hidden />
-            <div className="h-10 rounded bg-slate-100" aria-hidden />
-            <div className="h-10 rounded bg-slate-100" aria-hidden />
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer id="contact" className="mx-auto w-full max-w-6xl px-6 pb-10">
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
