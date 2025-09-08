@@ -562,11 +562,7 @@ export default async function CroMe() {
                 sub="Open your live profile in a new tab"
                 external
               />
-              <Action
-                href={`/projects/explore`}
-                label="Browse open RFPs"
-                sub="See active sponsor needs"
-              />
+              
             </div>
           </div>
         </section>
